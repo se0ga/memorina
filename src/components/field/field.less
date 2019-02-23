@@ -1,0 +1,39 @@
+.field {
+  display: flex;
+  height: 80vh;
+  align-items: center;
+  justify-content: space-around;
+  flex-wrap: wrap;
+  > div {
+    width: 20%;
+    height: 40%;
+    margin: 0.5% 0.5%;
+    padding: 1%;
+  }
+
+  div:nth-last-child(n+10),
+  div:nth-last-child(n+10) ~ div {
+    width: 13%;
+    height: 25%;
+  }
+  div:nth-last-child(n+16),
+   div:nth-last-child(n+16) ~ div {
+     width: 10%;
+     height: 20%;
+   }
+  div:nth-last-child(n+22),
+  div:nth-last-child(n+22) ~ div {
+    width: 8%;
+    height: 16%;
+  }
+  div:nth-last-child(n+34),
+  div:nth-last-child(n+34) ~ div {
+    width: 6%;
+    height: 12%;
+  }
+  div:nth-last-child(n+50),
+  div:nth-last-child(n+50) ~ div {
+    width: 3%;
+    height: 6%;
+  }
+}
