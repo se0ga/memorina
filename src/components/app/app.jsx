@@ -12,7 +12,7 @@ class App extends Component {
             inProgressTimeout: null,
             cardsAmount: 9,
             cardsType: 'pokemons',
-            startTime: false,
+            startTime: null,
             finishTime: null
         };
         this.createData = this.createData.bind(this);
@@ -26,7 +26,7 @@ class App extends Component {
 
     onCardsTypeClick(e) {
         const cardsType = e.target.getAttribute('data-cards-type');
-        this.setState({cardsType, data: this.createData(this.state.cardsAmount, cardsType)});
+        this.setState({cardsType, data: this.createData(this.state.cardsAmount, cardsType), startTime: null, finishTime: null});
     }
 
     showCards() {
@@ -42,7 +42,7 @@ class App extends Component {
 
     cardsAmountChange(e) {
         const cardsAmount = e.target.value;
-        this.setState({cardsAmount, data: this.createData(cardsAmount, this.state.cardsType)});
+        this.setState({cardsAmount, data: this.createData(cardsAmount, this.state.cardsType), startTime: null, finishTime: null});
     }
 
     hideInProgressCards() {
@@ -66,7 +66,7 @@ class App extends Component {
             newData[openedCards[0]].isOpened = false;
             newData[openedCards[1]].isOpened = false;
             clearTimeout(this.state.inProgressTimeout);
-            this.setState({inProgressTimeout: setTimeout(this.hideInProgressCards, 3000)});
+            this.setState({inProgressTimeout: setTimeout(this.hideInProgressCards, 1500)});
         }
         this.setState({data: newData});
         const cardsInGame = newData.filter(card => card.inGame);

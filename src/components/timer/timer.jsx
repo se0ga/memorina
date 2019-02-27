@@ -1,7 +1,12 @@
 import React, {Component} from 'react';
+import './timer.css'
+
+const addLeadingZero = num => num < 10 ? '0' + num : String(num);
 
 function FormattedTime(props) {
-    return <span>{Math.floor(props.time / 60)} : {props.time % 60}</span>;
+    const min = addLeadingZero(Math.floor(props.time / 60));
+    const sec = addLeadingZero(props.time % 60);
+    return <span>{min} : {sec} </span>;
 }
 
 class Timer extends Component {
@@ -12,7 +17,6 @@ class Timer extends Component {
             finishTime: props.finishTime,
             time: 0,
         };
-        console.log(1)
     }
 
     componentDidMount() {
@@ -37,7 +41,7 @@ class Timer extends Component {
 
     render() {
         return (
-            <div>
+            <div className="timer">
                 <FormattedTime time={this.state.time} />
             </div>
         );
