@@ -16,14 +16,14 @@
   width: 13%;
   height: 25%;
 }
-.field div:nth-last-child(n+16),
-.field div:nth-last-child(n+16) ~ div {
-  width: 10%;
+.field div:nth-last-child(n+20),
+.field div:nth-last-child(n+20) ~ div {
+  width: 11%;
   height: 20%;
 }
-.field div:nth-last-child(n+22),
-.field div:nth-last-child(n+22) ~ div {
-  width: 8%;
+.field div:nth-last-child(n+20),
+.field div:nth-last-child(n+20) ~ div {
+  width: 9%;
   height: 16%;
 }
 .field div:nth-last-child(n+34),
@@ -31,8 +31,8 @@
   width: 6%;
   height: 12%;
 }
-.field div:nth-last-child(n+50),
-.field div:nth-last-child(n+50) ~ div {
+.field div:nth-last-child(n+54),
+.field div:nth-last-child(n+54) ~ div {
   width: 3%;
   height: 6%;
 }

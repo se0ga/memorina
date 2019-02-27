@@ -1,5 +1,6 @@
 import React, {Component} from 'react';
 import Field from '../field';
+import Timer from '../timer';
 import './app.css';
 import types from './images';
 
@@ -9,8 +10,10 @@ class App extends Component {
         this.state = {
             data: [],
             inProgressTimeout: null,
-            cardsAmount: 2,
-            cardsType: 'pokemons'
+            cardsAmount: 9,
+            cardsType: 'pokemons',
+            startTime: false,
+            finishTime: null
         };
         this.createData = this.createData.bind(this);
         this.onCardClick = this.onCardClick.bind(this);
@@ -18,11 +21,23 @@ class App extends Component {
         this.hideInProgressCards = this.hideInProgressCards.bind(this);
         this.cardsAmountChange = this.cardsAmountChange.bind(this);
         this.onCardsTypeClick = this.onCardsTypeClick.bind(this);
+        this.showCards = this.showCards.bind(this);
     }
 
     onCardsTypeClick(e) {
         const cardsType = e.target.getAttribute('data-cards-type');
         this.setState({cardsType, data: this.createData(this.state.cardsAmount, cardsType)});
+    }
+
+    showCards() {
+        if (!this.state.startTime) {
+        clearTimeout(this.state.inProgressTimeout);
+        const newData = this.state.data.map(card => {
+            card.inProgress = true;
+            return card;
+        });
+        this.setState({data: newData, inProgressTimeout: setTimeout(this.hideInProgressCards, 5000)});
+        }
     }
 
     cardsAmountChange(e) {
@@ -54,11 +69,18 @@ class App extends Component {
             this.setState({inProgressTimeout: setTimeout(this.hideInProgressCards, 3000)});
         }
         this.setState({data: newData});
+        const cardsInGame = newData.filter(card => card.inGame);
+        if (cardsInGame.length === 0) {
+            this.setState({finishTime: new Date()});
+        }
     }
 
     onCardClick(id) {
+        if (!this.state.startTime) {
+            this.setState({startTime: new Date()});
+        }
         const newData = this.state.data;
-        newData[id].isOpened = !newData[id].inProgress && !newData[id].isOpened;
+        newData[id].isOpened = !newData[id].isOpened;
         this.setState({data: newData});
         this.checkOpenedCards();
     }
@@ -92,7 +114,9 @@ class App extends Component {
     render() {
         const {
             data,
-            cardsAmount
+            cardsAmount,
+            startTime,
+            finishTime,
         } = this.state;
         return (
             <div className="App">
@@ -100,6 +124,8 @@ class App extends Component {
                     <label><input type="range" min="1" max="50" name="points" value={cardsAmount} onChange={this.cardsAmountChange}/>{cardsAmount}</label>
                     <button data-cards-type="pokemons" onClick={this.onCardsTypeClick}>Pokemons</button>
                     <button data-cards-type="space" onClick={this.onCardsTypeClick}>Space</button>
+                    <button onClick={this.showCards}>Show cards</button>
+                    {startTime && <Timer startTime={startTime} finishTime={finishTime}/>}
                 </header>
                 <Field data={data} onCardClick={this.onCardClick}/>
             </div>
