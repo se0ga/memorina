@@ -13,6 +13,7 @@ class Field extends Component {
         {data.map((data, key) => {
             return (<Card key={key} data={data} onCardClick={onCardClick} cardId={key}></Card>);
         })}
+
     </div>);
 
     }

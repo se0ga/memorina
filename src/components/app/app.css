@@ -1,7 +1,7 @@
-.App {
+.app {
   text-align: center;
 }
-.App-header {
+.app .header {
   background-color: #282c34;
   min-height: 50px;
   display: flex;
@@ -10,9 +10,12 @@
   font-size: calc(10px + 2vmin);
   color: white;
 }
-.App-header button {
+.app .header button {
   padding: 5px;
   border-radius: 5px;
   margin: 5px;
+}
+.app .header .timer {
+  position: absolute;
 }
 /*# sourceMappingURL=app.css.map */

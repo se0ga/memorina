@@ -1,6 +1,7 @@
 import React, {Component} from 'react';
 import Field from '../field';
 import Timer from '../timer';
+import WinnerScreen from '../winnerScreen';
 import './app.css';
 import types from './images';
 
@@ -119,8 +120,8 @@ class App extends Component {
             finishTime,
         } = this.state;
         return (
-            <div className="App">
-                <header className="App-header">
+            <div className="app">
+                <header className="header">
                     <label><input type="range" min="1" max="50" name="points" value={cardsAmount} onChange={this.cardsAmountChange}/>{cardsAmount}</label>
                     <button data-cards-type="pokemons" onClick={this.onCardsTypeClick}>Pokemons</button>
                     <button data-cards-type="space" onClick={this.onCardsTypeClick}>Space</button>
@@ -128,6 +129,7 @@ class App extends Component {
                     {startTime && <Timer startTime={startTime} finishTime={finishTime}/>}
                 </header>
                 <Field data={data} onCardClick={this.onCardClick}/>
+                {finishTime && <WinnerScreen><Timer startTime={startTime} finishTime={finishTime}/></WinnerScreen>}
             </div>
         );
     }
