@@ -2,8 +2,10 @@ import React, {Component} from 'react';
 import Field from '../field';
 import Timer from '../timer';
 import WinnerScreen from '../winnerScreen';
+import CardTypeButton from '../cardTypeButton';
 import './app.css';
 import types from './images';
+const _ = require('lodash');
 
 class App extends Component {
     constructor(props) {
@@ -13,8 +15,11 @@ class App extends Component {
             inProgressTimeout: null,
             cardsAmount: 9,
             cardsType: 'pokemons',
-            startTime: null,
-            finishTime: null
+            isEndGame: false,
+            isGameRunning: false,
+            time: 0,
+            language: 'en',
+            maxRange: 50,
         };
         this.createData = this.createData.bind(this);
         this.onCardClick = this.onCardClick.bind(this);
@@ -23,27 +28,59 @@ class App extends Component {
         this.cardsAmountChange = this.cardsAmountChange.bind(this);
         this.onCardsTypeClick = this.onCardsTypeClick.bind(this);
         this.showCards = this.showCards.bind(this);
+        this.receiveTime = this.receiveTime.bind(this);
+        this.newGame = this.newGame.bind(this);
+        this.createCardTypeButtons = this.createCardTypeButtons.bind(this);
     }
 
-    onCardsTypeClick(e) {
-        const cardsType = e.target.getAttribute('data-cards-type');
-        this.setState({cardsType, data: this.createData(this.state.cardsAmount, cardsType), startTime: null, finishTime: null});
+    newGame() {
+        this.setState({
+            isEndGame: false,
+            isGameRunning: false,
+            data: this.createData(),
+        }, this.showCards)
+    }
+
+    onCardsTypeClick() {
+        const cardsType = document.getElementsByClassName('cardType');
+        for (let i = 0; i < cardsType.length; i += 1) {
+            if (cardsType[i].checked) {
+                const length = types[cardsType[i].id].length;
+                const maxRange = Math.min(50, length);
+                const cardsAmount = Math.min(this.state.cardsAmount, maxRange);
+                this.setState({cardsType: cardsType[i].id, maxRange, cardsAmount}, () => this.newGame());
+            }
+        }
+    }
+
+    createCardTypeButtons() {
+        const buttons = [];
+        for (const type in types) {
+            buttons.push(
+                <CardTypeButton key={type} type={type} language={this.state.language} onChange={this.onCardsTypeClick} iconName={types[type][0]}/>
+            );
+        }
+        return buttons;
+    }
+
+    receiveTime(time) {
+        this.setState({time});
     }
 
     showCards() {
-        if (!this.state.startTime) {
-        clearTimeout(this.state.inProgressTimeout);
-        const newData = this.state.data.map(card => {
-            card.inProgress = true;
-            return card;
-        });
-        this.setState({data: newData, inProgressTimeout: setTimeout(this.hideInProgressCards, 5000)});
+        if (!this.state.isGameRunning) {
+            clearTimeout(this.state.inProgressTimeout);
+            const newData = this.state.data.map(card => {
+                card.inProgress = true;
+                return card;
+            });
+            this.setState({data: newData, inProgressTimeout: setTimeout(this.hideInProgressCards, 3000)});
         }
     }
 
     cardsAmountChange(e) {
         const cardsAmount = e.target.value;
-        this.setState({cardsAmount, data: this.createData(cardsAmount, this.state.cardsType), startTime: null, finishTime: null});
+        this.setState({cardsAmount}, () => this.newGame());
     }
 
     hideInProgressCards() {
@@ -72,13 +109,13 @@ class App extends Component {
         this.setState({data: newData});
         const cardsInGame = newData.filter(card => card.inGame);
         if (cardsInGame.length === 0) {
-            this.setState({finishTime: new Date()});
+            this.setState({isEndGame: true, isGameRunning: false});
         }
     }
 
     onCardClick(id) {
-        if (!this.state.startTime) {
-            this.setState({startTime: new Date()});
+        if (!this.state.isGameRunning) {
+            this.setState({isGameRunning: true});
         }
         const newData = this.state.data;
         newData[id].isOpened = !newData[id].isOpened;
@@ -86,14 +123,11 @@ class App extends Component {
         this.checkOpenedCards();
     }
 
-    createData(amount, cardsType) {
-        function shuffle(a) {
-            for (let i = a.length - 1; i > 0; i--) {
-                const j = Math.floor(Math.random() * (i + 1));
-                [a[i], a[j]] = [a[j], a[i]];
-            }
-            return a;
-        }
+    createData() {
+        const cardsType = this.state.cardsType;
+        const amount = this.state.cardsAmount;
+        const names = _.shuffle(types[cardsType]);
+
         const data = [];
         const card = {
             isOpened: false,
@@ -102,34 +136,39 @@ class App extends Component {
             inProgress: false,
         };
         for (var i = 0; i < amount; i++) {
-            data.push({...card, name: types[cardsType][i], pair: i, id: i * 2});
-            data.push({...card, name: types[cardsType][i], pair: i, id: i * 2 + 1});
+            data.push({...card, name: names[i], pair: i, id: i * 2});
+            data.push({...card, name: names[i], pair: i, id: i * 2 + 1});
         }
-        return shuffle(data);
+        return _.shuffle(data);
     }
 
     componentDidMount() {
-        this.setState({data: this.createData(this.state.cardsAmount, this.state.cardsType)});
+        this.newGame();
     }
 
     render() {
         const {
             data,
             cardsAmount,
-            startTime,
-            finishTime,
+            isGameRunning,
+            isEndGame,
+            time,
+            maxRange,
         } = this.state;
         return (
             <div className="app">
                 <header className="header">
-                    <label><input type="range" min="1" max="50" name="points" value={cardsAmount} onChange={this.cardsAmountChange}/>{cardsAmount}</label>
-                    <button data-cards-type="pokemons" onClick={this.onCardsTypeClick}>Pokemons</button>
-                    <button data-cards-type="space" onClick={this.onCardsTypeClick}>Space</button>
-                    <button onClick={this.showCards}>Show cards</button>
-                    {startTime && <Timer startTime={startTime} finishTime={finishTime}/>}
+                    <input id='points' type="range" min="1" max={maxRange} name="points" value={cardsAmount} onChange={this.cardsAmountChange}/>
+                    <label className="range" htmlFor="points">{cardsAmount}</label>
+                    <button className='showCards' onClick={this.showCards}>Show cards</button>
+                    {this.createCardTypeButtons()}
+                    <div className='timer'>
+                        {isGameRunning && <Timer onStop={this.receiveTime}/>}
+                    </div>
                 </header>
                 <Field data={data} onCardClick={this.onCardClick}/>
-                {finishTime && <WinnerScreen><Timer startTime={startTime} finishTime={finishTime}/></WinnerScreen>}
+                {isEndGame && <WinnerScreen time={time} onRepeat={this.newGame}/>}
+                <div>Icons from <a href="https://www.flaticon.com/" title="Flaticon">www.flaticon.com</a> is licensed by <a href="http://creativecommons.org/licenses/by/3.0/" title="Creative Commons BY 3.0" target="_blank">CC 3.0 BY</a></div>
             </div>
         );
     }

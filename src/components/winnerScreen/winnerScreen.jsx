@@ -1,13 +1,15 @@
 import React from 'react';
-import './winnerScreen.css'
+import './winnerScreen.css';
+import FormattedTime from '../formattedTime';
 
-const WinnerScreen = ({children}) => {
+const WinnerScreen = ({time, onRepeat}) => {
 
         return (
             <div className="winnerScreen">
-                <div class="container">
-                <h2>Ещё разик?</h2>
-                {children}
+                <div className="container">
+                    <h2>Ещё разик?</h2>
+                    <FormattedTime time={time} withMS={true}/>
+                    <button onClick={onRepeat}>Space</button>
                 </div>
             </div>
         );

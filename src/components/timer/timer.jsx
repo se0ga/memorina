@@ -1,42 +1,37 @@
 import React, {Component} from 'react';
-import './timer.css'
-
-const addLeadingZero = num => num < 10 ? '0' + num : String(num);
-
-function FormattedTime(props) {
-    const min = addLeadingZero(Math.floor(props.time / 60));
-    const sec = addLeadingZero(props.time % 60);
-    return <span>{min} : {sec} </span>;
-}
+import FormattedTime from '../formattedTime';
+import './timer.css';
 
 class Timer extends Component {
     constructor(props) {
         super(props);
         this.state = {
-            startTime: props.startTime,
-            finishTime: props.finishTime,
-            time: 0,
+            startTime: null,
+            time: null,
         };
     }
 
     componentDidMount() {
+        this.setState({startTime: new Date(), time: 0});
         this.timerID = setInterval(
             () => this.tick(),
             1000
         );
     }
 
+    returnTime() {
+        return Math.floor((new Date() - this.state.startTime));
+    }
+
     componentWillUnmount() {
         clearInterval(this.timerID);
+        this.props.onStop(this.returnTime());
     }
 
     tick() {
         this.setState({
-            time: Math.floor((new Date() - this.state.startTime) / 1000),
+            time: this.returnTime(),
         });
-        if (this.props.finishTime) {
-            clearInterval(this.timerID);
-        }
     }
 
     render() {

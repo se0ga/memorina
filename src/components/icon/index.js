@@ -10,6 +10,7 @@ const Icon = ({ type, name }) => {
 };
 
 Icon.propTypes = {
+    type: PropTypes.string.isRequired,
     name: PropTypes.string.isRequired
 };
 

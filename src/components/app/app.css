@@ -9,13 +9,24 @@
   justify-content: left;
   font-size: calc(10px + 2vmin);
   color: white;
+  padding: 1px 10px;
 }
-.app .header button {
-  padding: 5px;
+.app .header .showCards {
+  border: 1px solid white;
   border-radius: 5px;
-  margin: 5px;
+  background-color: inherit;
+  color: white;
+  font-size: 19px;
+  padding: 8px;
 }
 .app .header .timer {
   position: absolute;
+  font-size: 30px;
+  right: 0px;
+  top: 4px;
+}
+.app .header .range {
+  width: 40px;
+  font-size: 30px;
 }
 /*# sourceMappingURL=app.css.map */
