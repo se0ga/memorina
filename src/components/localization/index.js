@@ -68,6 +68,10 @@ export default {
             en: 'kids',
             ru: 'дети',
         },
+        victory: {
+            en: 'victory',
+            ru: 'победа',
+        },
 
     },
     languageTitle: {

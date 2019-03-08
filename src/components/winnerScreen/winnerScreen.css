@@ -7,11 +7,32 @@
   display: flex;
   justify-content: space-around;
   align-items: center;
+  color: white;
 }
 .winnerScreen .container {
+  position: relative;
   width: 300px;
   height: 300px;
   border-radius: 10px;
   background-color: rgba(29, 29, 29, 0.86);
+}
+.winnerScreen .victoryIcon {
+  height: 160px;
+  margin: 10%;
+  width: 80%;
+}
+.winnerScreen .repeatButton {
+  font-size: 20px;
+  padding: 5px 20px;
+  border: 1px solid #282c34;
+  border-radius: 5px;
+  background-color: #ffd561;
+}
+.winnerScreen .cross {
+  position: absolute;
+  top: 10px;
+  right: 10px;
+  width: 18px;
+  height: 18px;
 }
 /*# sourceMappingURL=winnerScreen.css.map */

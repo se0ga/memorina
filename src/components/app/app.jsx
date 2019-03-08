@@ -4,7 +4,7 @@ import Timer from '../timer';
 import WinnerScreen from '../winnerScreen';
 import CardTypeButton from '../cardTypeButton';
 import './app.css';
-import types from './images';
+import {types} from '../icon';
 const _ = require('lodash');
 
 class App extends Component {
@@ -20,6 +20,7 @@ class App extends Component {
             time: 0,
             language: 'en',
             maxRange: 50,
+            winnerScreen: false,
         };
         this.createData = this.createData.bind(this);
         this.onCardClick = this.onCardClick.bind(this);
@@ -31,10 +32,22 @@ class App extends Component {
         this.receiveTime = this.receiveTime.bind(this);
         this.newGame = this.newGame.bind(this);
         this.createCardTypeButtons = this.createCardTypeButtons.bind(this);
+        this.closeScreens = this.closeScreens.bind(this);
+        this.handleKeyPress = this.handleKeyPress.bind(this);
     }
 
+    handleKeyPress(event) {
+        if(event.keyCode === 27) {
+            this.closeScreens();
+        }
+    }
+
+    closeScreens() {
+        this.setState({winnerScreen: false});
+    }
     newGame() {
         this.setState({
+            winnerScreen: false,
             isEndGame: false,
             isGameRunning: false,
             data: this.createData(),
@@ -85,6 +98,10 @@ class App extends Component {
 
     hideInProgressCards() {
         const newData = this.state.data.map(item => item.inProgress ? {...item, inProgress: false} : item);
+        const cardsInGame = newData.filter(card => card.inGame);
+        if (cardsInGame.length === 0) {
+            this.setState({isEndGame: true, isGameRunning: false, winnerScreen: true});
+        }
         this.setState({data: newData});
     }
 
@@ -107,10 +124,6 @@ class App extends Component {
             this.setState({inProgressTimeout: setTimeout(this.hideInProgressCards, 1500)});
         }
         this.setState({data: newData});
-        const cardsInGame = newData.filter(card => card.inGame);
-        if (cardsInGame.length === 0) {
-            this.setState({isEndGame: true, isGameRunning: false});
-        }
     }
 
     onCardClick(id) {
@@ -144,6 +157,7 @@ class App extends Component {
 
     componentDidMount() {
         this.newGame();
+        document.addEventListener('keydown', this.handleKeyPress);
     }
 
     render() {
@@ -151,9 +165,9 @@ class App extends Component {
             data,
             cardsAmount,
             isGameRunning,
-            isEndGame,
             time,
             maxRange,
+            winnerScreen,
         } = this.state;
         return (
             <div className="app">
@@ -161,13 +175,15 @@ class App extends Component {
                     <input id='points' type="range" min="1" max={maxRange} name="points" value={cardsAmount} onChange={this.cardsAmountChange}/>
                     <label className="range" htmlFor="points">{cardsAmount}</label>
                     <button className='showCards' onClick={this.showCards}>Show cards</button>
+                    <div className='cardTypeButtons'>
                     {this.createCardTypeButtons()}
+                    </div>
                     <div className='timer'>
                         {isGameRunning && <Timer onStop={this.receiveTime}/>}
                     </div>
                 </header>
                 <Field data={data} onCardClick={this.onCardClick}/>
-                {isEndGame && <WinnerScreen time={time} onRepeat={this.newGame}/>}
+                {winnerScreen && <WinnerScreen time={time} onRepeat={this.newGame} onCrossClick={this.closeScreens}/>}
                 <div>Icons from <a href="https://www.flaticon.com/" title="Flaticon">www.flaticon.com</a> is licensed by <a href="http://creativecommons.org/licenses/by/3.0/" title="Creative Commons BY 3.0" target="_blank">CC 3.0 BY</a></div>
             </div>
         );

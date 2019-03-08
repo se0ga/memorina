@@ -8,11 +8,33 @@
   display: flex;
   justify-content: space-around;
   align-items: center;
+  color: white;
 
   .container {
+    position: relative;
     width: 300px;
     height: 300px;
     border-radius: 10px;
     background-color: rgba(29, 29, 29, 0.86);
+  }
+
+  .victoryIcon {
+    height: 160px;
+    margin: 10%;
+    width: 80%;
+  }
+  .repeatButton {
+    font-size: 20px;
+    padding: 5px 20px;
+    border: 1px solid #282c34;
+    border-radius: 5px;
+    background-color: rgb(255, 213, 97);
+  }
+  .cross {
+    position: absolute;
+    top: 10px;
+    right: 10px;
+    width: 18px;
+    height: 18px;
   }
 }

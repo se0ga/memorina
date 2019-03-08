@@ -18,6 +18,8 @@
   color: white;
   font-size: 19px;
   padding: 8px;
+  height: 40px;
+  flex-shrink: 0;
 }
 .app .header .timer {
   position: absolute;
@@ -28,5 +30,24 @@
 .app .header .range {
   width: 40px;
   font-size: 30px;
+}
+.app .header .cardTypeButtons {
+  display: flex;
+  overflow-x: auto;
+  margin-right: 100px;
+  margin-left: 10px;
+}
+@media (max-width: 1319px) {
+  .cardTypeButtons::-webkit-scrollbar {
+    height: 3px;
+    -webkit-appearance: none;
+  }
+  .cardTypeButtons::-webkit-scrollbar-thumb {
+    border-radius: 2px;
+    background-color: rgba(255, 255, 255, 0.7);
+  }
+  .cardTypeButtons {
+    padding: 4px 0 2px;
+  }
 }
 /*# sourceMappingURL=app.css.map */
