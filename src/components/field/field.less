@@ -1,39 +1,71 @@
 .field {
   display: flex;
   height: 80vh;
-  align-items: center;
-  justify-content: space-around;
+  align-items: stretch;
+  justify-content: stretch;
   flex-wrap: wrap;
   > div {
-    width: 20%;
-    height: 40%;
-    margin: 0.5% 0.5%;
-    padding: 1%;
+    width: 24vw;
+    height: 39vh;
+    margin: 0.5vh 0.5vw;
+    padding: 0.5vh;
+    box-sizing: border-box;
   }
 
   div:nth-last-child(n+10),
   div:nth-last-child(n+10) ~ div {
-    width: 13%;
-    height: 25%;
+    width: 15.5vw;
+    height: 41vh;
+  }
+
+  div:nth-last-child(n+14),
+  div:nth-last-child(n+14) ~ div {
+    width: 15.5vw;
+    height: 27vh;
   }
   div:nth-last-child(n+20),
    div:nth-last-child(n+20) ~ div {
-     width: 11%;
-     height: 20%;
+     width: 11.5vw;
+     height: 27vh;
    }
-  div:nth-last-child(n+20),
-  div:nth-last-child(n+20) ~ div {
-    width: 9%;
-    height: 16%;
+  div:nth-last-child(n+26),
+  div:nth-last-child(n+26) ~ div {
+    width: 9vw;
+    height: 27vh;
   }
-  div:nth-last-child(n+34),
-  div:nth-last-child(n+34) ~ div {
-    width: 6%;
-    height: 12%;
+  div:nth-last-child(n+32),
+  div:nth-last-child(n+32) ~ div {
+    width: 9vw;
+    height: 20vh;
   }
-  div:nth-last-child(n+54),
-  div:nth-last-child(n+54) ~ div {
-    width: 3%;
-    height: 6%;
+  div:nth-last-child(n+42),
+  div:nth-last-child(n+42) ~ div {
+    width: 7.3vw;
+    height: 20vh;
+  }
+  div:nth-last-child(n+50),
+  div:nth-last-child(n+50) ~ div {
+    width: 7.3vw;
+    height: 16vh;
+  }
+  div:nth-last-child(n+62),
+  div:nth-last-child(n+62) ~ div {
+    width: 6.1vw;
+    height: 16vh;
+  }
+  div:nth-last-child(n+72),
+  div:nth-last-child(n+72) ~ div {
+    width: 6.1vw;
+    height: 13vh;
+  }
+  div:nth-last-child(n+86),
+  div:nth-last-child(n+86) ~ div {
+    width: 6.1vw;
+    height: 11vh;
+  }
+  div:nth-last-child(n+100),
+  div:nth-last-child(n+100) ~ div {
+    width: 4vw;
+    height: 16vh;
   }
 }

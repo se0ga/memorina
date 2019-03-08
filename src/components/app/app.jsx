@@ -3,8 +3,10 @@ import Field from '../field';
 import Timer from '../timer';
 import WinnerScreen from '../winnerScreen';
 import CardTypeButton from '../cardTypeButton';
+import Footer from '../footer';
 import './app.css';
 import {types} from '../icon';
+import localisation from '../localization';
 const _ = require('lodash');
 
 class App extends Component {
@@ -34,12 +36,18 @@ class App extends Component {
         this.createCardTypeButtons = this.createCardTypeButtons.bind(this);
         this.closeScreens = this.closeScreens.bind(this);
         this.handleKeyPress = this.handleKeyPress.bind(this);
+        this.handleLanguageChange = this.handleLanguageChange.bind(this);
     }
 
     handleKeyPress(event) {
         if(event.keyCode === 27) {
             this.closeScreens();
         }
+    }
+
+    handleLanguageChange(language) {
+        console.log(language)
+        this.setState({language});
     }
 
     closeScreens() {
@@ -168,13 +176,14 @@ class App extends Component {
             time,
             maxRange,
             winnerScreen,
+            language,
         } = this.state;
         return (
             <div className="app">
                 <header className="header">
-                    <input id='points' type="range" min="1" max={maxRange} name="points" value={cardsAmount} onChange={this.cardsAmountChange}/>
+                    <input id='points' type="range" min="2" max={maxRange} name="points" value={cardsAmount} onChange={this.cardsAmountChange}/>
                     <label className="range" htmlFor="points">{cardsAmount}</label>
-                    <button className='showCards' onClick={this.showCards}>Show cards</button>
+                    <button className='showCards' onClick={this.showCards}>{localisation.showCards[language]}</button>
                     <div className='cardTypeButtons'>
                     {this.createCardTypeButtons()}
                     </div>
@@ -183,8 +192,8 @@ class App extends Component {
                     </div>
                 </header>
                 <Field data={data} onCardClick={this.onCardClick}/>
-                {winnerScreen && <WinnerScreen time={time} onRepeat={this.newGame} onCrossClick={this.closeScreens}/>}
-                <div>Icons from <a href="https://www.flaticon.com/" title="Flaticon">www.flaticon.com</a> is licensed by <a href="http://creativecommons.org/licenses/by/3.0/" title="Creative Commons BY 3.0" target="_blank">CC 3.0 BY</a></div>
+                {winnerScreen && <WinnerScreen time={time} onRepeat={this.newGame} onCrossClick={this.closeScreens} lang={language}/>}
+                <Footer lang={language} onLanguageChange={this.handleLanguageChange}/>
             </div>
         );
     }

@@ -81,5 +81,21 @@ export default {
     showCards: {
         en: 'Show cards',
         ru: 'Показать карты',
+    },
+    feedback: {
+        en: 'Feedback',
+        ru: 'Напишите мне',
+    },
+    createdBy: {
+        en: 'created by ',
+        ru: 'создал: '
+    },
+    oneMoreTime: {
+        en: 'I wanna repeat!',
+        ru: 'Сыграем ещё раз?',
+    },
+    yourTime: {
+        en: 'Your time: ',
+        ru: 'Ваше время: ',
     }
 };

@@ -1234,5 +1234,5 @@ export default {
         '048-flag',
         '049-star',
         '050-podium',
-    ],
+    ]
 };

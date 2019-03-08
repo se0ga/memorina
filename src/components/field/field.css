@@ -1,39 +1,70 @@
 .field {
   display: flex;
   height: 80vh;
-  align-items: center;
-  justify-content: space-around;
+  align-items: stretch;
+  justify-content: stretch;
   flex-wrap: wrap;
 }
 .field > div {
-  width: 20%;
-  height: 40%;
-  margin: 0.5% 0.5%;
-  padding: 1%;
+  width: 24vw;
+  height: 39vh;
+  margin: 0.5vh 0.5vw;
+  padding: 0.5vh;
+  box-sizing: border-box;
 }
 .field div:nth-last-child(n+10),
 .field div:nth-last-child(n+10) ~ div {
-  width: 13%;
-  height: 25%;
+  width: 15.5vw;
+  height: 41vh;
+}
+.field div:nth-last-child(n+14),
+.field div:nth-last-child(n+14) ~ div {
+  width: 15.5vw;
+  height: 27vh;
 }
 .field div:nth-last-child(n+20),
 .field div:nth-last-child(n+20) ~ div {
-  width: 11%;
-  height: 20%;
+  width: 11.5vw;
+  height: 27vh;
 }
-.field div:nth-last-child(n+20),
-.field div:nth-last-child(n+20) ~ div {
-  width: 9%;
-  height: 16%;
+.field div:nth-last-child(n+26),
+.field div:nth-last-child(n+26) ~ div {
+  width: 9vw;
+  height: 27vh;
 }
-.field div:nth-last-child(n+34),
-.field div:nth-last-child(n+34) ~ div {
-  width: 6%;
-  height: 12%;
+.field div:nth-last-child(n+32),
+.field div:nth-last-child(n+32) ~ div {
+  width: 9vw;
+  height: 20vh;
 }
-.field div:nth-last-child(n+54),
-.field div:nth-last-child(n+54) ~ div {
-  width: 3%;
-  height: 6%;
+.field div:nth-last-child(n+42),
+.field div:nth-last-child(n+42) ~ div {
+  width: 7.3vw;
+  height: 20vh;
+}
+.field div:nth-last-child(n+50),
+.field div:nth-last-child(n+50) ~ div {
+  width: 7.3vw;
+  height: 16vh;
+}
+.field div:nth-last-child(n+62),
+.field div:nth-last-child(n+62) ~ div {
+  width: 6.1vw;
+  height: 16vh;
+}
+.field div:nth-last-child(n+72),
+.field div:nth-last-child(n+72) ~ div {
+  width: 6.1vw;
+  height: 13vh;
+}
+.field div:nth-last-child(n+86),
+.field div:nth-last-child(n+86) ~ div {
+  width: 6.1vw;
+  height: 11vh;
+}
+.field div:nth-last-child(n+100),
+.field div:nth-last-child(n+100) ~ div {
+  width: 4vw;
+  height: 16vh;
 }
 /*# sourceMappingURL=field.css.map */
