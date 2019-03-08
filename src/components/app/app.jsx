@@ -4,9 +4,11 @@ import Timer from '../timer';
 import WinnerScreen from '../winnerScreen';
 import CardTypeButton from '../cardTypeButton';
 import Footer from '../footer';
+import {YMInitializer} from 'react-yandex-metrika';
 import './app.css';
 import {types} from '../icon';
 import localisation from '../localization';
+
 const _ = require('lodash');
 
 class App extends Component {
@@ -40,7 +42,7 @@ class App extends Component {
     }
 
     handleKeyPress(event) {
-        if(event.keyCode === 27) {
+        if (event.keyCode === 27) {
             this.closeScreens();
         }
     }
@@ -53,6 +55,7 @@ class App extends Component {
     closeScreens() {
         this.setState({winnerScreen: false});
     }
+
     newGame() {
         this.setState({
             winnerScreen: false,
@@ -78,7 +81,8 @@ class App extends Component {
         const buttons = [];
         for (const type in types) {
             buttons.push(
-                <CardTypeButton key={type} type={type} language={this.state.language} onChange={this.onCardsTypeClick} iconName={types[type][0]}/>
+                <CardTypeButton key={type} type={type} language={this.state.language} onChange={this.onCardsTypeClick}
+                                iconName={types[type][0]}/>
             );
         }
         return buttons;
@@ -179,21 +183,24 @@ class App extends Component {
             language,
         } = this.state;
         return (
-            <div className="app">
-                <header className="header">
-                    <input id='points' type="range" min="2" max={maxRange} name="points" value={cardsAmount} onChange={this.cardsAmountChange}/>
-                    <label className="range" htmlFor="points">{cardsAmount}</label>
+            <div className='app'>
+                <header className='header'>
+                    <input id='points' type='range' min='2' max={maxRange} name='points' value={cardsAmount}
+                           onChange={this.cardsAmountChange}/>
+                    <label className='range' htmlFor='points'>{cardsAmount}</label>
                     <button className='showCards' onClick={this.showCards}>{localisation.showCards[language]}</button>
                     <div className='cardTypeButtons'>
-                    {this.createCardTypeButtons()}
+                        {this.createCardTypeButtons()}
                     </div>
                     <div className='timer'>
                         {isGameRunning && <Timer onStop={this.receiveTime}/>}
                     </div>
                 </header>
                 <Field data={data} onCardClick={this.onCardClick}/>
-                {winnerScreen && <WinnerScreen time={time} onRepeat={this.newGame} onCrossClick={this.closeScreens} lang={language}/>}
+                {winnerScreen &&
+                <WinnerScreen time={time} onRepeat={this.newGame} onCrossClick={this.closeScreens} lang={language}/>}
                 <Footer lang={language} onLanguageChange={this.handleLanguageChange}/>
+                <YMInitializer accounts={[52710124]} options={{webvisor: true}} version='2'/>
             </div>
         );
     }

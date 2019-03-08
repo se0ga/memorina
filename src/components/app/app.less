@@ -15,15 +15,15 @@
     padding: 1px 10px;
 
     .showCards {
-        border: 1px solid white;
-        border-radius: 5px;
+      border: 1px solid white;
+      border-radius: 5px;
       background-color: inherit;
-        color: white;
-        font-size: 19px;
-        padding: 8px;
+      color: white;
+      font-size: 19px;
+      padding: 8px;
       height: 40px;
       flex-shrink: 0;
-      }
+    }
     .timer {
       position: absolute;
       font-size: 30px;
@@ -49,11 +49,21 @@
     height: 3px;
     -webkit-appearance: none;
   }
+
   .cardTypeButtons::-webkit-scrollbar-thumb {
     border-radius: 2px;
     background-color: rgba(255, 255, 255, .7);
   }
+
   .cardTypeButtons {
     padding: 4px 0 2px;
+  }
+}
+@media (max-width: 500px) {
+  .showCards {
+    display: none;
+  }
+  footer {
+    display: none;
   }
 }

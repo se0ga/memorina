@@ -53,4 +53,12 @@
     padding: 4px 0 2px;
   }
 }
+@media (max-width: 500px) {
+  .showCards {
+    display: none;
+  }
+  footer {
+    display: none;
+  }
+}
 /*# sourceMappingURL=app.css.map */

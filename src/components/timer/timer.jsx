@@ -36,10 +36,11 @@ class Timer extends Component {
 
     render() {
         return (
-            <div className="timer">
-                <FormattedTime time={this.state.time} />
+            <div className='timer'>
+                <FormattedTime time={this.state.time}/>
             </div>
         );
     }
 }
+
 export default Timer;

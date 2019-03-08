@@ -1,5 +1,5 @@
 import React from 'react';
-import Localization from "../localization";
+import Localization from '../localization';
 import Icon from '../icon';
 import './cardTypeButton.css';
 
