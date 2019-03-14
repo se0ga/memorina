@@ -90,12 +90,44 @@ export default {
         en: 'created by ',
         ru: 'создал: '
     },
-    oneMoreTime: {
-        en: 'I wanna repeat!',
-        ru: 'Сыграем ещё раз?',
+    winnerScreen: {
+        oneMoreTime: {
+            en: 'I wanna repeat!',
+            ru: 'Сыграем ещё раз?',
+        },
+        yourTime: {
+            en: 'Your time: ',
+            ru: 'Ваше время: ',
+        },
+        yourPlace: {
+            en: 'Your place: ',
+            ru: 'Ваше место: ',
+        },
+        namePlaceholder: {
+            en: 'Your name',
+            ru: 'Введите имя',
+        },
+        saveButton: {
+            en: 'Save',
+            ru: 'Сохранить',
+        },
     },
-    yourTime: {
-        en: 'Your time: ',
-        ru: 'Ваше время: ',
+    resultsScreenButton: {
+        en: 'Winners',
+        ru: 'Победители',
+    },
+    resultsScreen: {
+        cardsType: {
+            en: 'Cards type',
+            ru: 'Тип карточек',
+        },
+        pairs: {
+            en: 'Pairs',
+            ru: 'Количество пар',
+        },
+        teaser: {
+            en: 'You can be the first! Let\'s play!',
+            ru: 'Ещё никто не сумел выиграть в этой игре! Может быть ты обыграешь всех?',
+        }
     }
 };

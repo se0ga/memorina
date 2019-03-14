@@ -2,12 +2,14 @@ import React, {Component} from 'react';
 import Field from '../field';
 import Timer from '../timer';
 import WinnerScreen from '../winnerScreen';
+import ResultsScreen from '../resultsScreen';
 import CardTypeButton from '../cardTypeButton';
 import Footer from '../footer';
 import {YMInitializer} from 'react-yandex-metrika';
 import './app.css';
 import {types} from '../icon';
-import localisation from '../localization';
+import localization from '../localization';
+import FormattedTime from '../formattedTime';
 
 const _ = require('lodash');
 
@@ -25,6 +27,7 @@ class App extends Component {
             language: 'en',
             maxRange: 50,
             winnerScreen: false,
+            resultsScreen: false,
         };
         this.createData = this.createData.bind(this);
         this.onCardClick = this.onCardClick.bind(this);
@@ -39,6 +42,7 @@ class App extends Component {
         this.closeScreens = this.closeScreens.bind(this);
         this.handleKeyPress = this.handleKeyPress.bind(this);
         this.handleLanguageChange = this.handleLanguageChange.bind(this);
+        this.showResultsScreen = this.showResultsScreen.bind(this);
     }
 
     handleKeyPress(event) {
@@ -47,17 +51,21 @@ class App extends Component {
         }
     }
 
+    showResultsScreen(){
+        this.setState({resultsScreen: true})
+    }
+
     handleLanguageChange(language) {
-        console.log(language)
         this.setState({language});
     }
 
     closeScreens() {
-        this.setState({winnerScreen: false});
+        this.newGame();
     }
 
     newGame() {
         this.setState({
+            resultsScreen: false,
             winnerScreen: false,
             isEndGame: false,
             isGameRunning: false,
@@ -110,10 +118,6 @@ class App extends Component {
 
     hideInProgressCards() {
         const newData = this.state.data.map(item => item.inProgress ? {...item, inProgress: false} : item);
-        const cardsInGame = newData.filter(card => card.inGame);
-        if (cardsInGame.length === 0) {
-            this.setState({isEndGame: true, isGameRunning: false, winnerScreen: true});
-        }
         this.setState({data: newData});
     }
 
@@ -135,6 +139,10 @@ class App extends Component {
             clearTimeout(this.state.inProgressTimeout);
             this.setState({inProgressTimeout: setTimeout(this.hideInProgressCards, 1500)});
         }
+        const cardsInGame = newData.filter(card => card.inGame);
+        if (cardsInGame.length === 0) {
+            this.setState({isEndGame: true, isGameRunning: false, winnerScreen: true});
+        }
         this.setState({data: newData});
     }
 
@@ -143,7 +151,7 @@ class App extends Component {
             this.setState({isGameRunning: true});
         }
         const newData = this.state.data;
-        newData[id].isOpened = !newData[id].isOpened;
+        newData[id].isOpened = (!newData[id].inProgress || !this.state.isGameRunning) && !newData[id].isOpened;
         this.setState({data: newData});
         this.checkOpenedCards();
     }
@@ -171,7 +179,9 @@ class App extends Component {
         this.newGame();
         document.addEventListener('keydown', this.handleKeyPress);
     }
-
+    componentWillUnmount() {
+        document.removeEventListener('keydown', this.handleKeyPress);
+    }
     render() {
         const {
             data,
@@ -181,6 +191,8 @@ class App extends Component {
             maxRange,
             winnerScreen,
             language,
+            cardsType,
+            resultsScreen,
         } = this.state;
         return (
             <div className='app'>
@@ -188,17 +200,19 @@ class App extends Component {
                     <input id='points' type='range' min='2' max={maxRange} name='points' value={cardsAmount}
                            onChange={this.cardsAmountChange}/>
                     <label className='range' htmlFor='points'>{cardsAmount}</label>
-                    <button className='showCards' onClick={this.showCards}>{localisation.showCards[language]}</button>
+                    <button className='showCards' onClick={this.showCards}>{localization.showCards[language]}</button>
+                    <button className='resultsScreenButton' onClick={this.showResultsScreen}>{localization.resultsScreenButton[language]}</button>
                     <div className='cardTypeButtons'>
                         {this.createCardTypeButtons()}
                     </div>
-                    <div className='timer'>
-                        {isGameRunning && <Timer onStop={this.receiveTime}/>}
+                    <div className='timerPlace'>
+                        {isGameRunning ? <Timer onStop={this.receiveTime}/> : <FormattedTime time='0'/>}
                     </div>
                 </header>
                 <Field data={data} onCardClick={this.onCardClick}/>
                 {winnerScreen &&
-                <WinnerScreen time={time} onRepeat={this.newGame} onCrossClick={this.closeScreens} lang={language}/>}
+                <WinnerScreen cardsType={cardsType} cardsAmount={cardsAmount} time={time} onRepeat={this.newGame} onCrossClick={this.closeScreens} lang={language}/>}
+                {resultsScreen && <ResultsScreen language={language} cardsAmount={cardsAmount} cardsType={cardsType} onCrossClick={this.closeScreens}/>}
                 <Footer lang={language} onLanguageChange={this.handleLanguageChange}/>
                 <YMInitializer accounts={[52710124]} options={{webvisor: true}} version='2'/>
             </div>

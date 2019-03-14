@@ -12,21 +12,35 @@
 .winnerScreen .container {
   position: relative;
   width: 300px;
-  height: 300px;
+  height: 350px;
   border-radius: 10px;
   background-color: rgba(29, 29, 29, 0.86);
 }
 .winnerScreen .victoryIcon {
   height: 160px;
-  margin: 10%;
+  margin: 24px 10%;
   width: 80%;
 }
-.winnerScreen .repeatButton {
+.winnerScreen .button {
   font-size: 20px;
   padding: 5px 20px;
   border: 1px solid #282c34;
   border-radius: 5px;
   background-color: #ffd561;
+}
+.winnerScreen .repeatButton {
+  margin-top: 19px;
+}
+.winnerScreen h3 {
+  margin: 0;
+  margin-bottom: 8px;
+}
+.winnerScreen .playerName {
+  width: 60%;
+  height: 25px;
+  padding-left: 5px;
+  border-radius: 5px;
+  margin-bottom: 8px;
 }
 .winnerScreen .cross {
   position: absolute;
@@ -34,5 +48,9 @@
   right: 10px;
   width: 18px;
   height: 18px;
+}
+.winnerScreen .playerPlace {
+  width: 100%;
+  height: 80px;
 }
 /*# sourceMappingURL=winnerScreen.css.map */
