@@ -1,4 +1,4 @@
-Here can see the result: http://memorina.ru/
+Here you can see the result: http://memorina.ru/
 
 This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
 
