@@ -27,8 +27,8 @@
 }
 .langListbox ul {
   position: absolute;
-  top: -68px;
-  right: -2px;
+  top: -100px;
+  right: 8px;
   list-style: none;
 }
 /*# sourceMappingURL=langListbox.css.map */

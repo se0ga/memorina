@@ -17,7 +17,7 @@ class LangListbox extends Component {
     }
 
     render() {
-        const supportedLanguages = ['en', 'ru'];
+        const supportedLanguages = ['en', 'ru', 'spa'];
         const {lang} = this.props;
         return (
             <div className='langListbox'>
